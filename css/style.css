@@ -1,0 +1,320 @@
+body {
+  font-family: 'Roboto', Arial, sans-serif; /* Змінив шрифт */
+  padding: 30px 10px;
+  background: #f8f9fa; /* Світліший фон */
+  color: #333; /* Трохи темніший текст */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd; /* Світліший бордер */
+  padding: 10px; /* Трохи більший відступ */
+  text-align: left;
+}
+
+th {
+  background-color: #e9ecef; /* Світло-сірий фон */
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: #f1f3f5; /* Трохи світліший фон для парних рядків */
+}
+
+/* Стиль для заголовка */
+h1 {
+  text-align: center;
+  font-size: 2.5rem; /* Збільшив розмір */
+  font-weight: 700;
+  margin-bottom: 32px;
+  letter-spacing: 0.8px; /* Трохи більший інтервал між літерами */
+  color: #fff;
+  background-color: #22223b;
+  border-radius: 24px;
+  padding: 25px 55px; /* Збільшив відступи */
+  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.15); /* Трохи більша тінь */
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  display: block;
+  width: auto;
+  margin-top: auto;
+  
+}
+
+header nav ul {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0; 
+  background: transparent;
+}
+
+header nav ul li {
+  margin: 16px 24px 0 0;
+  position: static;
+}
+
+header nav ul li a,
+header nav ul li button {
+  display: inline-block;
+  padding: 12px 24px; /* Збільшив відступи */
+  background: linear-gradient(90deg, #5a6268 0%, #adb5bd 100%); /* Новий градієнт */
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Трохи більший радіус */
+  font-size: 1.1rem; /* Трохи більший шрифт */
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(90, 98, 104, 0.15); /* Трохи більша тінь */
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+
+
+#projects-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  font-size: 1rem;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1); /* Трохи більша тінь */
+}
+
+#projects-table th, #projects-table td {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 10px; /* Збільшив відступи */
+  text-align: left;
+}
+
+#projects-table th {
+  background: #f8f9fa; /* Світліший фон */
+  font-weight: 600;
+  font-size: 1.1rem; /* Трохи більший шрифт */
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+}
+
+#projects-table tr:nth-child(even) {
+  background: #f1f3f5;
+}
+
+#projects-table tr:hover {
+  background: #e9ecef; /* Світліший фон при наведенні */
+}
+
+#projects-table a {
+  color: #495057; /* Темніший текст */
+  font-weight: 500;
+}
+
+#projects-table th:first-child, #projects-table td:first-child {
+  text-align: center;
+  width: 50px;
+}
+
+#projects-table th, #projects-table td {
+  vertical-align: middle;
+}
+
+/* Стиль для блоку фільтрів */
+.filter-bar {
+  width: 80%; /* Трохи ширше */
+  display: flex;
+  gap: 20px; /* Зменшив відступи між елементами */
+  margin-bottom: 24px;
+  align-items: center;
+  background: linear-gradient(90deg, #6c757d 0%, #adb5bd 100%); /* Новий градієнт */
+  border-radius: 12px;
+  padding: 20px 24px; /* Збільшив відступи */
+  box-shadow: 0 3px 15px rgba(108, 117, 125, 0.15); /* Трохи більша тінь */
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.filter-bar .back-btn {
+  margin-left: auto;
+  padding: 10px 24px; /* Збільшив відступи */
+  background: linear-gradient(90deg, #495057 0%, #adb5bd 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(73, 80, 87, 0.15);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+
+
+.filter-bar label {
+  font-size: 1.1rem; /* Трохи більший шрифт */
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#department-filter, #region-filter, #search-input {
+  font-size: 1rem;
+  padding: 6px 12px; /* Збільшив відступи */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  transition: border-color 0.3s;
+}
+
+#department-filter:focus, #region-filter:focus, #search-input:focus {
+  border-color: #6c757d;
+  outline: none;
+}
+
+#department-filter-cards, #region-filter-cards, #search-input-cards {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+#department-filter-cards:focus, #region-filter-cards:focus, #search-input-cards:focus {
+  border-color: #4a4e69;
+  outline: none;
+}
+
+#cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* збільшено відступ між картками */
+  justify-content: center; /* центрування карток */
+  margin: 32px auto;
+  max-width: 1700px; /* ширше, щоб вміщалось 4 */
+  padding: 0 32px; /* додано бокові відступи */
+  box-sizing: border-box; /* важливо для однакової ширини */
+}
+
+/* Картка: кнопки завжди внизу */
+.project-card {
+  flex: 1 1 calc(25% - 24px);
+  max-width: calc(25% - 24px);
+  background: linear-gradient(90deg, #fbc2eb 0%, #a18cd1 100%);
+  color: #22223b;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(74,78,105,0.13);
+  padding: 20px 18px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 180px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative; /* додано */
+}
+
+.project-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 6px 24px rgba(74,78,105,0.18);
+}
+
+.card-number {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4a4e69;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card-department,
+.card-region {
+  font-size: 0.98rem;
+  margin-bottom: 6px;
+}
+
+.card-links {
+  margin-top: auto; /* кнопки завжди внизу */
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.card-links a {
+  display: inline-block;
+  margin: 0; /* прибрано margin-right та margin-top */
+  padding: 6px 18px;
+  background: #4a4e69;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.98rem;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.card-links a:hover {
+  background: #22223b;
+}
+
+/* Адаптив */
+@media (max-width: 1100px) {
+  .project-card {
+    flex-basis: calc(50% - 24px);
+    max-width: calc(50% - 24px);
+  }
+}
+@media (max-width: 700px) {
+  .project-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  #cards-container {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .filter-bar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+  }
+  .filter-bar label {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Для сторінки cards.html */
+.cards-title {
+  display: block;
+  margin: 0 auto 32px auto;
+  width: 80%;
+  max-width: 1700px; /* як у #cards-container */
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(90deg, #4a4e69 0%, #9a8c98 100%);
+  border-radius: 14px;
+  padding: 18px 32px 14px 32px; /* додано бокові відступи */
+  box-sizing: border-box;       /* важливо для однакової ширини */
+  box-shadow: 0 4px 18px rgba(74,78,105,0.13);
+  text-shadow: 0 2px 8px #22223b33;
+}
