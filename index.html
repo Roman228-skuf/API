@@ -1,50 +1,83 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Наукові роботи МАН 2024</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Картки учасників МАН</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="cards.html">Картки</a></li>
-      </ul>
-    </nav>
-  <h1>Перелік наукових робіт МАН України 2025</h1>
-  <div class="filter-bar">
-    <label>
-      Відділення:
-      <select id="department-filter">
-        <option value="">Всі</option>
-      </select>
-    </label>
-    <label>
-      Область:
-      <select id="region-filter">
-        <option value="">Всі</option>
-      </select>
-    </label>
-    <label style="margin-left: auto;">
-      Пошук: <input type="text" id="search-input" style="width: 160px;">
-    </label>
-  </div>
-  <table id="projects-table">
-    <thead>
-      <tr>
-        <th>№</th>
-        <th>Назва</th>
-        <th>Відділення</th>
-        <th>Область</th>
-        <th>Детальна інформація</th>
-        <th>Віртуальний постер</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h1 class="cards-title">Перелік учасників МАН України 2025</h1>
+    <div class="filter-bar">
+        <label>
+            Область:
+            <select id="region-filter-cards">
+                <option value="">Всі</option>
+            </select>
+        </label>
+        <label style="margin-left: auto;">
+            Пошук: <input type="text" id="search-input-cards" style="width: 160px;">
+        </label>
+        
+    </div>
+    <div id="cards-container"></div>
+    <script>
+    fetch('js/jasustudents2025.json')
+        .then(response => response.json())
+        .then(data => {
+            const cardsData = data.filter(item => item.title);
 
-  <script src="js/script.js"></script>
+            const regionFilter = document.getElementById('region-filter-cards');
+            const searchInput = document.getElementById('search-input-cards');
+
+            // Унікальні області
+            const regions = Array.from(new Set(cardsData.map(i => i.region).filter(Boolean))).sort();
+            regions.forEach(reg => {
+                const opt = document.createElement('option');
+                opt.value = reg;
+                opt.textContent = reg;
+                regionFilter.appendChild(opt);
+            });
+
+            function renderCards() {
+                const regVal = regionFilter.value;
+                const searchVal = searchInput.value.trim().toLowerCase();
+
+                const container = document.getElementById('cards-container');
+                container.innerHTML = '';
+                cardsData.forEach(item => {
+                    if (
+                        (regVal === '' || item.region === regVal) &&
+                        (
+                            !searchVal ||
+                            (item.title && item.title.toLowerCase().includes(searchVal)) ||
+                            (item.region && item.region.toLowerCase().includes(searchVal)) ||
+                            (item.number && item.number.toString().includes(searchVal))
+                        )
+                    ) {
+                        const card = document.createElement('div');
+                        card.className = 'project-card';
+                        card.innerHTML = `
+                            <div class="card-number">№${item.number || ''}</div>
+                            <div class="card-title">${item.title || ''}</div>
+                            <div class="card-region"><b>Область:</b> ${item.region || ''}</div>
+                            <div class="card-class"><b>Клас/Курс:</b> ${item.class || ''}</div>
+                            <div class="card-score"><b>Сума балів:</b> ${item.totalScore || ''}</div>
+                            <div class="card-rating"><b>Рейтинг:</b> ${item.rating || ''}</div>
+                            <div class="card-place"><b>Місце:</b> ${item.place !== 0 ? item.place : '-'}</div>
+                        `;
+                        container.appendChild(card);
+                    }
+                });
+            }
+
+            regionFilter.addEventListener('change', renderCards);
+            searchInput.addEventListener('input', renderCards);
+
+            renderCards();
+        });
+    </script>
 </body>
 </html>
