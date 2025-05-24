@@ -1,63 +1,71 @@
-fetch('js/jasu2025_data.json')
-  .then(response => response.json())
-  .then(data => {
-    const tbody = document.querySelector('#projects-table tbody');
-    const departmentFilter = document.getElementById('department-filter');
-    const regionFilter = document.getElementById('region-filter');
-    const searchInput = document.getElementById('search-input');
+const subjectFiles = {
+    math: 'js/math.json',
+    Economika: 'js/Economika.json',
+    PsycistAndSpace: 'js/PsycistAndSpace.json'
+};
 
-    // Зібрати унікальні відділення та області
-    const departments = Array.from(new Set(data.map(i => i["Відділення"]).filter(Boolean))).sort();
-    const regions = Array.from(new Set(data.map(i => i["Область"]).filter(Boolean))).sort();
+const subjectFilter = document.getElementById('subject-filter-cards');
+const regionFilter = document.getElementById('region-filter-cards');
+const searchInput = document.getElementById('search-input-cards');
+const container = document.getElementById('cards-container');
 
-    departments.forEach(dep => {
-      const opt = document.createElement('option');
-      opt.value = dep;
-      opt.textContent = dep;
-      departmentFilter.appendChild(opt);
-    });
+let cardsData = [];
+
+function loadData(subject) {
+    fetch(subjectFiles[subject])
+        .then(response => response.json())
+        .then(data => {
+            cardsData = data.filter(item => item.title);
+            updateRegionFilter();
+            renderCards();
+        });
+}
+
+function updateRegionFilter() {
+    const regions = Array.from(new Set(cardsData.map(i => i.region).filter(Boolean))).sort();
+    regionFilter.innerHTML = '<option value="">Всі</option>';
     regions.forEach(reg => {
-      const opt = document.createElement('option');
-      opt.value = reg;
-      opt.textContent = reg;
-      regionFilter.appendChild(opt);
+        const opt = document.createElement('option');
+        opt.value = reg;
+        opt.textContent = reg;
+        regionFilter.appendChild(opt);
     });
+}
 
-    function renderTable() {
-      const depVal = departmentFilter.value;
-      const regVal = regionFilter.value;
-      const searchVal = searchInput.value.trim().toLowerCase();
-
-      tbody.innerHTML = '';
-      data.forEach(item => {
+function renderCards() {
+    const regVal = regionFilter.value;
+    const searchVal = searchInput.value.trim().toLowerCase();
+    container.innerHTML = '';
+    cardsData.forEach(item => {
         if (
-          (depVal === '' || item["Відділення"] === depVal) &&
-          (regVal === '' || item["Область"] === regVal) &&
-          (
-            !searchVal ||
-            (item["Назва"] && item["Назва"].toLowerCase().includes(searchVal)) ||
-            (item["№"] && item["№"].toString().toLowerCase().includes(searchVal)) ||
-            (item["Відділення"] && item["Відділення"].toLowerCase().includes(searchVal)) ||
-            (item["Область"] && item["Область"].toLowerCase().includes(searchVal))
-          )
+            (regVal === '' || item.region === regVal) &&
+            (
+                !searchVal ||
+                (item.title && item.title.toLowerCase().includes(searchVal)) ||
+                (item.region && item.region.toLowerCase().includes(searchVal)) ||
+                (item.number && item.number.toString().includes(searchVal))
+            )
         ) {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${item["№"] || ''}</td>
-            <td>${item["Назва"] || ''}</td>
-            <td>${item["Відділення"] || ''}</td>
-            <td>${item["Область"] || ''}</td>
-            <td>${item["Детальна інформація"] ? `<a href="${item["Детальна інформація"]}" target="_blank">Натиснути</a>` : ''}</td>
-            <td>${item["Віртуальний постер"] ? `<a href="${item["Віртуальний постер"]}" target="_blank">Натиснути</a>` : ''}</td>
-          `;
-          tbody.appendChild(row);
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <div class="card-number">№${item.number || ''}</div>
+                <div class="card-title">${item.title || ''}</div>
+                <div class="card-region"><b>Область:</b> ${item.region || ''}</div>
+                <div class="card-class"><b>Клас/Курс:</b> ${item.class || ''}</div>
+                <div class="card-section"><b>Секція:</b> ${item.section || ''}</div>
+                <div class="card-score"><b>Сума балів:</b> ${item.totalScore || ''}</div>
+                <div class="card-rating"><b>Рейтинг:</b> ${item.rating || ''}</div>
+                <div class="card-place"><b>Місце:</b> ${item.place !== 0 ? item.place : '-'}</div>
+            `;
+            container.appendChild(card);
         }
-      });
-    }
+    });
+}
 
-    departmentFilter.addEventListener('change', renderTable);
-    regionFilter.addEventListener('change', renderTable);
-    searchInput.addEventListener('input', renderTable);
+subjectFilter.addEventListener('change', () => loadData(subjectFilter.value));
+regionFilter.addEventListener('change', renderCards);
+searchInput.addEventListener('input', renderCards);
 
-    renderTable();
-  });
+// Початкове завантаження
+loadData(subjectFilter.value);
